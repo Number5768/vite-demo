@@ -68,35 +68,118 @@ body {
   background-color: rgba(74, 111, 165, 0.05);
   position: relative;
   display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.search-and-reload {
+  display: flex;
   align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.search-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border-radius: var(--border-radius);
 }
 
 .search-input {
   width: 100%;
-  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  padding: 0.9rem 1rem 0.9rem 3rem;
   border: 1px solid var(--medium-gray);
   border-radius: var(--border-radius);
   font-size: 1rem;
   transition: var(--transition);
   font-family: inherit;
+  background-color: white;
+}
+
+.reload-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.reload-button:hover {
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.reload-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reload-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.reload-button.reloading {
+  background: var(--dark-gray);
+}
+
+.reload-icon {
+  font-size: 1.1rem;
+  display: inline-block;
+}
+
+.reloading-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.mini-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(74, 111, 165, 0.1);
+  border-left-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 .search-input:focus {
   outline: none;
   border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px rgba(79, 195, 220, 0.2);
+  box-shadow: 0 0 0 3px rgba(79, 195, 220, 0.3);
+  transform: translateY(-1px);
 }
 
 .search-icon {
   position: absolute;
-  left: 2.2rem;
+  left: 1rem;
   font-size: 1.2rem;
+  color: var(--primary-color);
+  pointer-events: none;
 }
 
 /* Table Styles */
 .table-container {
   padding: 1.5rem;
   overflow-x: auto;
+  border-radius: var(--border-radius);
 }
 
 .data-table {
@@ -105,21 +188,29 @@ body {
   border-spacing: 0;
   border-radius: var(--border-radius);
   overflow: hidden;
-  box-shadow: 0 0 0 1px var(--medium-gray);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .data-table th,
 .data-table td {
-  padding: 1rem;
+  padding: 1.1rem 1.2rem;
   text-align: left;
+  border-bottom: 1px solid rgba(222, 226, 230, 0.7);
 }
 
 .data-table th {
-  background-color: var(--primary-color);
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   color: white;
   font-weight: 500;
   position: sticky;
   top: 0;
+  letter-spacing: 0.5px;
+  font-size: 1.05rem;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
 }
 
 .data-table tr:last-child td:first-child {
@@ -130,16 +221,31 @@ body {
   border-bottom-right-radius: var(--border-radius);
 }
 
+.data-table tr:first-child th:first-child {
+  border-top-left-radius: var(--border-radius);
+}
+
+.data-table tr:first-child th:last-child {
+  border-top-right-radius: var(--border-radius);
+}
+
 .even-row {
   background-color: white;
 }
 
 .odd-row {
-  background-color: rgba(74, 111, 165, 0.05);
+  background-color: rgba(74, 111, 165, 0.03);
 }
 
 .data-table tr:hover {
-  background-color: rgba(79, 195, 220, 0.1);
+  background-color: rgba(79, 195, 220, 0.15);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.data-table td {
+  transition: all 0.2s ease;
 }
 
 /* Loading State */
@@ -228,6 +334,16 @@ body {
   .data-table th,
   .data-table td {
     padding: 0.8rem;
+  }
+  
+  .search-and-reload {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .reload-button {
+    width: 100%;
+    justify-content: center;
   }
 }
 
